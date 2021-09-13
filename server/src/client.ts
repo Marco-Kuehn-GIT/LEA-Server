@@ -25,11 +25,15 @@ export class Client {
     
         websocket.on("message", (data: WebSocket.Data) =>{
             let msgType: number = data.toString().charCodeAt(0);
-            console.log(`Msg(${MSG_TYPE[msgType]}) form ${this.name}`);
+            let msgStr: string = data.toString().substring(1);
 
             switch(msgType){
                 case MSG_TYPE.CHAT:
-                    server.sendMsgToAll(MSG_TYPE.CHAT, data.toString());
+                    console.log(`Msg(${MSG_TYPE[msgType]}) form ${this.name}`);
+                    server.sendMsgToAllExcept(this.websocket, MSG_TYPE.CHAT, msgStr);
+                    break;
+                case MSG_TYPE.MOVE:
+                    server.sendMsgToAllExcept(this.websocket, MSG_TYPE.MOVE, msgStr);
                     break;
             }
         });
