@@ -3,6 +3,7 @@ import WebSocket from "ws";
 import { Server, MSG_TYPE } from "./server";
 import { Vector2 } from "./interfaces";
 import { Inventory } from "./inventory";
+import { getWorldDataAsMsg } from "./data";
 
 export class Client {
     public websocket: WebSocket;
@@ -56,5 +57,12 @@ export class Client {
                     break;
             }
         });
+
+        // Send init msg
+        server.sendMsg(
+            this.websocket,
+            MSG_TYPE.INIT,
+            getWorldDataAsMsg()
+        );
     }
 }

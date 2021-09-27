@@ -1,6 +1,23 @@
-import fs, { readFileSync } from "fs";
+import fs from "fs";
+
+import { Vector2 } from "./interfaces";
 
 let config: ConfigData;
+let worldData: WorldData;
+
+
+export enum TILE_TYPE{
+    WATER,
+    GRASS,
+    STONE,
+    TREE
+}
+
+export interface WorldData{
+    size: Vector2,
+    ground: TILE_TYPE[][],
+    object: TILE_TYPE[][]
+}
 
 export interface ConfigData{
     port: number,
@@ -31,48 +48,20 @@ export function loadPlayerData(name: string) {
     return JSON.parse(lines);
 }
 
-export class Data {
-    constructor() {}
-
-    checkLogin() {}
-
-    getWorldData(): NetworkObjet[] {
-        return [new NetworkObjet(0, "")];
-    }
+export function loadWorldData() {
+    let lines: string = readFile(config.worldDirectory + "/world.json");
+    worldData = JSON.parse(lines);
+    return worldData;
 }
 
-export class NetworkType {
-    toMsgFormat(): string {
-        return "";
+export function getWorldDataAsMsg(){
+    //worldData
+    let msgStr: string = worldData.size.x + " " + worldData.size.y + " ";
+
+    for (const row of worldData.ground) {
+        for (const tileType of row) {
+            msgStr += String.fromCharCode(tileType);
+        }
     }
-}
-
-export class NetworkObjet extends NetworkType {
-    id: number;
-    name: string;
-
-    constructor(id: number, name: string) {
-        super();
-        this.id = id;
-        this.name = name;
-    }
-
-    toMsgFormat(): string {
-        return "";
-    }
-}
-
-export class NetworkPlayer extends NetworkType {
-    health: number = 100;
-    maxHealth: number = 100;
-
-}
-
-export class NetworkItem extends NetworkType {
-    id: number;
-
-    constructor(id: number) {
-        super();
-        this.id = id;
-    }
+    return msgStr;
 }

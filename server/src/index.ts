@@ -2,9 +2,13 @@ import WebSocket from "ws";
 
 import { Client } from "./client";
 import { Server, MSG_TYPE } from "./server";
-import { ConfigData, loadConfigData, loadPlayerData } from "./data";
+import { ConfigData, loadConfigData, loadPlayerData, loadWorldData, getWorldDataAsMsg } from "./data";
 
 let config: ConfigData = loadConfigData();
+loadWorldData();
+console.log(getWorldDataAsMsg());
+
+
 
 const maxConnections: number = config.maxConnections;
 const serverOptions: WebSocket.ServerOptions = { 

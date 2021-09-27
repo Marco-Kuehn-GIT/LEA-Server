@@ -1,13 +1,13 @@
 import WebSocket from "ws";
 
 export enum MSG_TYPE {
-    "AUTH",
-    "INIT",
-    "CHAT",
-    "SPAWN",
-    "MOVE",
-    "CHANGE_TRANSFORM",
-    "ERR"
+    AUTH,
+    INIT,
+    CHAT,
+    SPAWN,
+    MOVE,
+    CHANGE_TRANSFORM,
+    ERR
 }
 
 export class Server{
