@@ -2,10 +2,13 @@ import WebSocket from "ws";
 
 import { Client } from "./client";
 import { Server, MSG_TYPE } from "./server";
+import { ConfigData, loadConfigData, loadPlayerData } from "./data";
 
-const maxConnections: number = 64;
+let config: ConfigData = loadConfigData();
+
+const maxConnections: number = config.maxConnections;
 const serverOptions: WebSocket.ServerOptions = { 
-    port: 4242
+    port: config.port
 };
 
 // Start the WebSocketServer with the serverOptions
