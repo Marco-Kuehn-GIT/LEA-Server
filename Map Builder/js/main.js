@@ -1,12 +1,12 @@
-const mapSize = 100;
+const mapSize = 10;
 const layer1 = document.querySelector('#layer1');
 const layer2 = document.querySelector('#layer2');
 const layer1Btn = document.querySelector('#layer1Btn');
 const layer2Btn = document.querySelector('#layer2Btn');
 const tyleType = document.querySelector('select');
-const getButton = document.querySelector('getButton');
-const giveButton = document.querySelector('giveButton');
-const textare = document.querySelector('textarea');
+const getButton = document.querySelector('#getButton');
+const giveButton = document.querySelector('#giveButton');
+const textarea = document.querySelector('textarea');
 
 //Type -- Number
 //WATER     0
@@ -112,11 +112,11 @@ layer2Btn.addEventListener('change', (e) =>{
     }
 });
 
+const layer1Rows = document.querySelectorAll('#layer1 tr');
+const layer2Rows = document.querySelectorAll('#layer2 tr');
 
 
 getButton.addEventListener('click', (e)=>{
-    const layer1Rows = document.querySelectorAll('#layer1 tr');
-    const layer2Rows = document.querySelectorAll('#layer2 tr');
 
     let file = {};
 
@@ -128,14 +128,12 @@ getButton.addEventListener('click', (e)=>{
         const tableDatas = row.querySelectorAll('td');
         let tmp = [];
         for (const data of tableDatas) {
-            console.log(data);
-            console.log(data.tileData);
             tmp.push(data.tileData);
         }
         file.ground.push(tmp);
     }
 
-    file.objekt = [];
+    file.object = [];
 
     for (const row of layer2Rows) {
         const tableDatas = row.querySelectorAll('td');
@@ -143,12 +141,45 @@ getButton.addEventListener('click', (e)=>{
         for (const data of tableDatas) {
             tmp.push(data.tileData);
         }
-        file.objekt.push(tmp);
+        file.object.push(tmp);
     }
-    textare.textContent = JSON.stringify(file);
+
+    textarea.value = JSON.stringify(file);
 })
 
 
 giveButton.addEventListener('click' , (e)=>{
+    file = JSON.parse(textarea.value);
     
+    for (let i = 0; i < file.ground.length; i++) {
+        const groundRow = file.ground[i];
+        const groundTiles = layer1Rows[i].querySelectorAll('td');
+        for (let j = 0; j < groundTiles.length; j++) {
+            const tile = groundTiles[j];
+            tile.tileData = groundRow[j];
+            const div = tile.querySelector('div');
+            if(tile.tileData === 0){
+                div.style.backgroundColor = "aqua";
+            }
+            else{
+                div.style.backgroundColor = "green";
+            }
+        }
+    }
+
+    for (let i = 0; i < file.object.length; i++) {
+        const objectRow = file.object[i];
+        const objectTiles = layer2Rows[i].querySelectorAll('td');
+        for (let j = 0; j < objectTiles.length; j++) {
+            const tile = objectTiles[j];
+            tile.tileData = objectRow[j];
+            const div = tile.querySelector('div');
+            if(tile.tileData === 2){
+                div.style.backgroundColor = "grey";
+            }
+            else if(tile.tileData === 3){
+                div.style.backgroundColor = "brown";
+            }
+        }
+    }
 })
