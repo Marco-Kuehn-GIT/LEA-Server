@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/layout.css">
+    <script src="/js/main.js" defer></script>
+    <title>Mab Builder</title>
+</head>
+<body>
+
+    <ul id="layer-list">
+        <li><input type="checkbox" id="layer1Btn" checked = "true">Layer 1</li>
+        <li><input type="checkbox" id="layer2Btn">Layer 2</li>
+    </ul>
+
+    <select>
+        <option value="0">Water</option>
+        <option value="1">Ground</option>
+        <option value="2">Rock</option>
+        <option value="3">Tree</option>
+    </select>
+
+    <button id="getButton">Exportier mich</button>
+
+    <table id="layer1" draggable="false"></table>
+    <table id="layer2" draggable="false" class="hidden"></table>
+
+    <textarea>
+        
+    </textarea>
+
+    <button id="giveButton">Importier mich</button>
+
+</body>
+</html>
