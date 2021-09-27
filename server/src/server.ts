@@ -3,10 +3,10 @@ import WebSocket from "ws";
 export enum MSG_TYPE {
     AUTH,
     INIT,
+    SET_WORLD,
     CHAT,
     SPAWN,
     MOVE,
-    CHANGE_TRANSFORM,
     ERR
 }
 

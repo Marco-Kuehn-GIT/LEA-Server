@@ -61,7 +61,7 @@ export class Client {
         // Send init msg
         server.sendMsg(
             this.websocket,
-            MSG_TYPE.INIT,
+            MSG_TYPE.SET_WORLD,
             getWorldDataAsMsg()
         );
     }
