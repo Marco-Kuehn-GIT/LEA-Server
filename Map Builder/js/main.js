@@ -7,6 +7,7 @@ const tyleType = document.querySelector('select');
 const getButton = document.querySelector('#getButton');
 const giveButton = document.querySelector('#giveButton');
 const textarea = document.querySelector('textarea');
+const brushSizeRange = document.querySelector("#brush-size-range");
 
 //Type -- Number
 //WATER     0
@@ -24,11 +25,32 @@ window.addEventListener('mouseup', (e)=>{
     mousePressed = false;
 })
 
+let brushSize = 0;
 
+brushSizeRange.addEventListener("change",()=>{
+    brushSize = parseInt(brushSizeRange.value);
+});
 
-for (let i = 0; i < mapSize; i++) {
+let lastPos = null;
+
+let fields = [];
+
+function changeTileData (tyleType, tableData){
+    if(tyleType.value === "0"){
+        tableData.tileData = 0;
+        tableData.div.style.backgroundColor = "aqua";
+    }
+    else if (tyleType.value === "1"){
+        tableData.tileData = 1;
+        tableData.div.style.backgroundColor = "green";
+    }
+}
+
+for (let j = 0; j < mapSize; j++) {
     const tableRow = document.createElement("tr");
     tableRow.draggable = false;
+
+    let fieldRow = [];
     for (let i = 0; i < mapSize; i++) {
         const tableData = document.createElement("td");
         const div = document.createElement("div");
@@ -37,26 +59,33 @@ for (let i = 0; i < mapSize; i++) {
         tableData.draggable = false;
         tableData.tileData = 0;
         
+        tableData.x = j;
+        tableData.y = i;
+        tableData.div = div;
 
         tableData.addEventListener('mouseenter', (e) =>{
             if(mousePressed){
-                if(tyleType.value === "0"){
-                    tableData.tileData = 0;
-                    div.style.backgroundColor = "aqua";
-                }
-                else if (tyleType.value === "1"){
-                    tableData.tileData = 1;
-                    div.style.backgroundColor = "green";
+                changeTileData(tyleType, tableData, div);
+
+                // paint neighbors
+                for (let index = -brushSize; index < brushSize; index++) {
+                    for (let index2 = -brushSize; index2 < brushSize; index2++) {
+                        try{
+                            changeTileData(tyleType, fields[tableData.x + index][tableData.y + index2]);
+                        }catch(e){}
+                    }
                 }
             }
-        })
+        });
 
         div.style = "width: 12px; height: 12px;"
 
         tableData.append(div);
         tableRow.append(tableData);
+        fieldRow.push(tableData);
     }
     layer1.append(tableRow);
+    fields.push(fieldRow);
 }
 
 
