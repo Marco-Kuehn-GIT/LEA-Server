@@ -1,4 +1,4 @@
-const mapSize = 10;
+const mapSize = 100;
 const layer1 = document.querySelector('#layer1');
 const layer2 = document.querySelector('#layer2');
 const layer1Btn = document.querySelector('#layer1Btn');
@@ -73,7 +73,11 @@ for (let i = 0; i < mapSize; i++) {
 
         tableData.addEventListener('mouseenter', (e) =>{
             if(mousePressed){
-                if(tyleType.value === "2"){
+                if (tyleType.value === "0"){
+                    tableData.tileData = 0;
+                    div.style.backgroundColor = "aqua";
+                }
+                else if(tyleType.value === "2"){
                     tableData.tileData = 2;
                     div.style.backgroundColor = "grey";
                 }
