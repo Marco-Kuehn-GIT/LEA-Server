@@ -63,11 +63,20 @@ export class Client {
                     );
                     break;
                 case MSG_TYPE.AUTH:{
-                    server.sendMsg(
+                    server.sendMsgToAllExcept(
                         this.websocket,
                         MSG_TYPE.SPAWN,
                         this.id
                     );
+
+                    for (const client of clientList) {
+                        if(this === client) continue;
+                        server.sendMsg(
+                            this.websocket,
+                            MSG_TYPE.SPAWN,
+                            client.id
+                        );
+                    }
 
                     // Send init msg
                     server.sendMsg(
