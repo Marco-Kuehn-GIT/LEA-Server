@@ -63,5 +63,30 @@ export function getWorldDataAsMsg(){
             msgStr += String.fromCharCode(tileType);
         }
     }
+    for (const row of worldData.object) {
+        for (const tileType of row) {
+            msgStr += String.fromCharCode(tileType);
+        }
+    }
     return msgStr;
+}
+
+export function getWorldGround(position: Vector2){
+    return worldData.ground[position.x][position.y]
+}
+
+export function getWorldObject(position: Vector2){
+    return worldData.object[position.x][position.y]
+}
+
+export function changeWorldGround(position: Vector2, type:TILE_TYPE){
+    worldData.ground[position.x][position.y] = type;
+}
+
+export function changeWorldObject(position: Vector2, type:TILE_TYPE){
+    worldData.object[position.x][position.y] = type;
+}
+
+export function saveWorldData(){
+    fs.writeFileSync(config.worldDirectory + "/world.json", JSON.stringify(worldData));
 }

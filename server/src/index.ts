@@ -2,11 +2,10 @@ import WebSocket from "ws";
 
 import { Client } from "./client";
 import { Server, MSG_TYPE } from "./server";
-import { ConfigData, loadConfigData, loadPlayerData, loadWorldData, getWorldDataAsMsg } from "./data";
+import * as Data from "./data";
 
-let config: ConfigData = loadConfigData();
-loadWorldData();
-console.log(getWorldDataAsMsg());
+let config: Data.ConfigData = Data.loadConfigData();
+Data.loadWorldData();
 
 
 

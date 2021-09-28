@@ -3,7 +3,7 @@ const layer1 = document.querySelector('#layer1');
 const layer2 = document.querySelector('#layer2');
 const layer1Btn = document.querySelector('#layer1Btn');
 const layer2Btn = document.querySelector('#layer2Btn');
-const tyleType = document.querySelector('select');
+const tileType = document.querySelector('select');
 const getButton = document.querySelector('#getButton');
 const giveButton = document.querySelector('#giveButton');
 const textarea = document.querySelector('textarea');
@@ -35,12 +35,12 @@ let lastPos = null;
 
 let fields = [];
 
-function changeTileData (tyleType, tableData){
-    if(tyleType.value === "0"){
+function changeTileData (tileType, tableData){
+    if(tileType.value === "0"){
         tableData.tileData = 0;
         tableData.div.style.backgroundColor = "aqua";
     }
-    else if (tyleType.value === "1"){
+    else if (tileType.value === "1"){
         tableData.tileData = 1;
         tableData.div.style.backgroundColor = "green";
     }
@@ -65,13 +65,13 @@ for (let j = 0; j < mapSize; j++) {
 
         tableData.addEventListener('mouseenter', (e) =>{
             if(mousePressed){
-                changeTileData(tyleType, tableData, div);
+                changeTileData(tileType, tableData, div);
 
                 // paint neighbors
                 for (let index = -brushSize; index < brushSize; index++) {
                     for (let index2 = -brushSize; index2 < brushSize; index2++) {
                         try{
-                            changeTileData(tyleType, fields[tableData.x + index][tableData.y + index2]);
+                            changeTileData(tileType, fields[tableData.x + index][tableData.y + index2]);
                         }catch(e){}
                     }
                 }
@@ -102,15 +102,15 @@ for (let i = 0; i < mapSize; i++) {
 
         tableData.addEventListener('mouseenter', (e) =>{
             if(mousePressed){
-                if (tyleType.value === "0"){
+                if (tileType.value === "0"){
                     tableData.tileData = 0;
                     div.style.backgroundColor = "aqua";
                 }
-                else if(tyleType.value === "2"){
+                else if(tileType.value === "2"){
                     tableData.tileData = 2;
                     div.style.backgroundColor = "grey";
                 }
-                else if (tyleType.value === "3"){
+                else if (tileType.value === "3"){
                     tableData.tileData = 3;
                     div.style.backgroundColor = "brown";
                 }
