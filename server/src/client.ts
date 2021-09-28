@@ -7,7 +7,9 @@ import { getWorldDataAsMsg } from "./data";
 
 export class Client {
     public websocket: WebSocket;
-    public name: String;
+    public id: string;
+    public name: string;
+    public clientList: Client[];
     public position: Vector2;
     public inventory: Inventory;
 
@@ -16,19 +18,24 @@ export class Client {
     constructor(
         websocket: WebSocket,
         server: Server,
+        id: string,
         name: string,
+        clientList: Client[],
         position: Vector2 = { x: 0, y: 0 },
         inventory: Inventory = new Inventory()
     ) {
         this.websocket = websocket;
         this.server = server;
+        this.id = id;
         this.name = name;
+        this.clientList = clientList;
         this.position = position;
         this.inventory = inventory;
 
         // Set event handler
         websocket.on("close", (code: number, reason: string) => {
             console.log("Client has disconnected!");
+            this.clientList.splice(clientList.indexOf(this));
         });
 
         websocket.on("error", (err: Error) => {
@@ -52,17 +59,24 @@ export class Client {
                     server.sendMsgToAllExcept(
                         this.websocket,
                         MSG_TYPE.MOVE,
-                        msgStr
+                        this.id + " " + msgStr
                     );
                     break;
+                case MSG_TYPE.AUTH:{
+                    server.sendMsg(
+                        this.websocket,
+                        MSG_TYPE.SPAWN,
+                        this.id
+                    );
+
+                    // Send init msg
+                    server.sendMsg(
+                        this.websocket,
+                        MSG_TYPE.SET_WORLD,
+                        getWorldDataAsMsg()
+                    );
+                }
             }
         });
-
-        // Send init msg
-        server.sendMsg(
-            this.websocket,
-            MSG_TYPE.SET_WORLD,
-            getWorldDataAsMsg()
-        );
     }
 }
