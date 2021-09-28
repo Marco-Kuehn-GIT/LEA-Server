@@ -19,6 +19,8 @@ const webSocketServer: WebSocket.Server = new WebSocket.Server(serverOptions);
 const server: Server = new Server(webSocketServer);
 console.log(`Started server at port ${serverOptions.port}...`);
 
+let clientList: Client[] = [];
+
 // Set Listener for WebSocketConnections
 webSocketServer.on("connection", (websocket: WebSocket) => {
     if(webSocketServer.clients.size >= maxConnections){
@@ -27,9 +29,16 @@ webSocketServer.on("connection", (websocket: WebSocket) => {
     }
 
     // Create a client
-    let client =  new Client(websocket, server, "Player_" + Math.floor(Math.random() * 1000));
+    let client =  new Client(websocket, server, createId(), "Player_" + Math.floor(Math.random() * 1000), clientList);
+
+    clientList.push(client);
 
     console.log(`${client.name} connected!`);
     console.log(`Player connected: ${webSocketServer.clients.size}`);
 });
 
+function createId(): string{
+    let uID = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+
+    return uID;
+}
