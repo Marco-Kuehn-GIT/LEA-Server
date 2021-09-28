@@ -36,6 +36,11 @@ export class Client {
         websocket.on("close", (code: number, reason: string) => {
             console.log("Client has disconnected!");
             this.clientList.splice(clientList.indexOf(this));
+            server.sendMsgToAllExcept(
+                this.websocket,
+                MSG_TYPE.DESPAWN,
+                this.id
+            );
         });
 
         websocket.on("error", (err: Error) => {

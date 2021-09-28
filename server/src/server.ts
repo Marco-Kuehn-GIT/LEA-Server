@@ -6,6 +6,7 @@ export enum MSG_TYPE {
     SET_WORLD,
     CHAT,
     SPAWN,
+    DESPAWN,
     MOVE,
     ERR
 }
