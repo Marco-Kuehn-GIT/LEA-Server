@@ -57,13 +57,15 @@ export class Client {
                     console.log("ADD",msgStr);
                     
                     msgArr = msgStr.split(" ");
-                    Data.changeWorldObject({x: parseInt(msgArr[1]), y: parseInt(msgArr[2])}, parseInt(msgArr[0]))
-                    server.sendMsgToAll(MSG_TYPE.ADD_RESOURCE, msgStr);
+                    if(Data.changeWorldObject({x: parseInt(msgArr[1]), y: parseInt(msgArr[2])}, parseInt(msgArr[0]))){
+                        server.sendMsgToAll(MSG_TYPE.ADD_RESOURCE, msgStr);
+                    }
                     break;
                 case MSG_TYPE.REMOVE_RESOURCE:
                     msgArr = msgStr.split(" ");
-                    Data.changeWorldObject({x: parseInt(msgArr[0]), y: parseInt(msgArr[1])}, Data.TILE_TYPE.WATER)
-                    server.sendMsgToAll(MSG_TYPE.REMOVE_RESOURCE, msgStr);
+                    if(Data.changeWorldObject({x: parseInt(msgArr[0]), y: parseInt(msgArr[1])}, Data.TILE_TYPE.WATER)){
+                        server.sendMsgToAll(MSG_TYPE.REMOVE_RESOURCE, msgStr);
+                    }
                     break;
 
                 case MSG_TYPE.CHAT:
