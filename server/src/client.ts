@@ -3,7 +3,7 @@ import WebSocket from "ws";
 import { Server, MSG_TYPE } from "./server";
 import { Vector2 } from "./interfaces";
 import { Inventory } from "./inventory";
-import { getWorldDataAsMsg } from "./data";
+import * as Data from "./data";
 
 export class Client {
     public websocket: WebSocket;
@@ -50,8 +50,22 @@ export class Client {
         websocket.on("message", (data: WebSocket.Data) => {
             let msgType: number = data.toString().charCodeAt(0);
             let msgStr: string = data.toString().substring(1);
+            let msgArr: string[] = [];
 
             switch (msgType) {
+                case MSG_TYPE.ADD_RESOURCE:
+                    console.log("ADD",msgStr);
+                    
+                    msgArr = msgStr.split(" ");
+                    Data.changeWorldObject({x: parseInt(msgArr[1]), y: parseInt(msgArr[2])}, parseInt(msgArr[0]))
+                    server.sendMsgToAll(MSG_TYPE.ADD_RESOURCE, msgStr);
+                    break;
+                case MSG_TYPE.REMOVE_RESOURCE:
+                    msgArr = msgStr.split(" ");
+                    Data.changeWorldObject({x: parseInt(msgArr[0]), y: parseInt(msgArr[1])}, Data.TILE_TYPE.WATER)
+                    server.sendMsgToAll(MSG_TYPE.REMOVE_RESOURCE, msgStr);
+                    break;
+
                 case MSG_TYPE.CHAT:
                     console.log(`Msg(${MSG_TYPE[msgType]}) form ${this.name}`);
                     server.sendMsgToAllExcept(
@@ -87,7 +101,7 @@ export class Client {
                     server.sendMsg(
                         this.websocket,
                         MSG_TYPE.SET_WORLD,
-                        getWorldDataAsMsg()
+                        Data.getWorldDataAsMsg()
                     );
                 }
             }
