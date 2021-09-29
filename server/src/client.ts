@@ -10,6 +10,7 @@ export class Client {
     public id: string;
     public name: string;
     public clientList: Client[];
+    public skin: number;
     public position: Vector2;
     public inventory: Inventory;
 
@@ -31,6 +32,8 @@ export class Client {
         this.clientList = clientList;
         this.position = position;
         this.inventory = inventory;
+
+        this.skin = Math.floor(Math.random() * 4);
 
         // Set event handler
         websocket.on("close", (code: number, reason: string) => {
@@ -84,10 +87,16 @@ export class Client {
                     );
                     break;
                 case MSG_TYPE.AUTH:{
+                    server.sendMsg(
+                        this.websocket,
+                        MSG_TYPE.INIT,
+                        this.skin + ""
+                    );
+
                     server.sendMsgToAllExcept(
                         this.websocket,
                         MSG_TYPE.SPAWN,
-                        this.id
+                        this.id + " " + this.skin
                     );
 
                     for (const client of clientList) {
