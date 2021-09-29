@@ -104,7 +104,7 @@ export class Client {
                         server.sendMsg(
                             this.websocket,
                             MSG_TYPE.SPAWN,
-                            client.id
+                            client.id + " " + client.skin
                         );
                     }
 
