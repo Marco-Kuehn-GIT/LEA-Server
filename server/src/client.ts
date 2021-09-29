@@ -96,7 +96,7 @@ export class Client {
                     server.sendMsgToAllExcept(
                         this.websocket,
                         MSG_TYPE.SPAWN,
-                        this.id + " " + this.skin
+                        this.id + " " + this.skin + " " + this.name
                     );
 
                     for (const client of clientList) {
@@ -104,7 +104,7 @@ export class Client {
                         server.sendMsg(
                             this.websocket,
                             MSG_TYPE.SPAWN,
-                            client.id + " " + client.skin
+                            client.id + " " + client.skin + " " + client.name
                         );
                     }
 
