@@ -84,7 +84,9 @@ export function changeWorldGround(position: Vector2, type:TILE_TYPE){
 }
 
 export function changeWorldObject(position: Vector2, type:TILE_TYPE){
-    worldData.object[position.x][position.y] = type;
+    if(type === TILE_TYPE.WATER || worldData.object[position.x][position.y] === TILE_TYPE.WATER){
+        worldData.object[position.x][position.y] = type;
+    }
 }
 
 export function saveWorldData(){
