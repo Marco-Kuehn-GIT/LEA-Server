@@ -172,7 +172,7 @@ getButton.addEventListener('click', (e)=>{
         const tableDatas = row.querySelectorAll('td');
         let tmp = [];
         for (const data of tableDatas) {
-            tmp.push(data.tileData);
+            tmp.push({type: data.tileData, helath: 4});
         }
         file.object.push(tmp);
     }
@@ -205,7 +205,7 @@ giveButton.addEventListener('click' , (e)=>{
         const objectTiles = layer2Rows[i].querySelectorAll('td');
         for (let j = 0; j < objectTiles.length; j++) {
             const tile = objectTiles[j];
-            tile.tileData = objectRow[j];
+            tile.tileData = objectRow[j].type;
             const div = tile.querySelector('div');
             if(tile.tileData === 2){
                 div.style.backgroundColor = "grey";
