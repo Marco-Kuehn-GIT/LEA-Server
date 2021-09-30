@@ -76,12 +76,17 @@ export class Client {
                     server.sendMsgToAllExcept(
                         this.websocket,
                         MSG_TYPE.CHAT,
-                        msgStr
+                        this.name + ": " + msgStr
                     );
                     break;
                 case MSG_TYPE.MOVE:
-                    server.sendMsgToAllExcept(
-                        this.websocket,
+                    msgArr = msgStr.split(" ");
+                    this.position = {
+                        x: parseFloat(msgArr[0]),
+                        y: parseFloat(msgArr[1])
+                    };
+                    server.sendMsgToAllExceptInRange(
+                        this,
                         MSG_TYPE.MOVE,
                         this.id + " " + msgStr
                     );

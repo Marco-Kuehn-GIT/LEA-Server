@@ -13,10 +13,15 @@ export enum TILE_TYPE{
     TREE
 }
 
+export interface ResourceObj{
+    type: TILE_TYPE,
+    health: number
+}
+
 export interface WorldData{
     size: Vector2,
     ground: TILE_TYPE[][],
-    object: TILE_TYPE[][]
+    object: ResourceObj[][]
 }
 
 export interface ConfigData{
@@ -65,7 +70,7 @@ export function getWorldDataAsMsg(){
     }
     for (const row of worldData.object) {
         for (const tileType of row) {
-            msgStr += String.fromCharCode(tileType);
+            msgStr += String.fromCharCode(tileType.type);
         }
     }
     return msgStr;
@@ -84,8 +89,8 @@ export function changeWorldGround(position: Vector2, type:TILE_TYPE){
 }
 
 export function changeWorldObject(position: Vector2, type:TILE_TYPE){
-    if(type === TILE_TYPE.WATER || worldData.object[position.x][position.y] === TILE_TYPE.WATER){
-        worldData.object[position.x][position.y] = type;
+    if(type === TILE_TYPE.WATER || worldData.object[position.x][position.y].type === TILE_TYPE.WATER){
+        worldData.object[position.x][position.y].type = type;
         return true;
     }else{
         return false;

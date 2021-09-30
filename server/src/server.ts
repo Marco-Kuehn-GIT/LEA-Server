@@ -1,4 +1,5 @@
 import WebSocket from "ws";
+import { Client } from "./client";
 
 export enum MSG_TYPE {
     AUTH,
@@ -17,9 +18,11 @@ export enum MSG_TYPE {
 export class Server{
 
     webSocketServer: WebSocket.Server;
+    clientList: Client[];
 
-    constructor(webSocketServer: WebSocket.Server){
+    constructor(webSocketServer: WebSocket.Server, clientList: Client[]){
         this.webSocketServer = webSocketServer;
+        this.clientList = clientList;
     }
 
     // Send a msg to the client
@@ -41,5 +44,22 @@ export class Server{
         this.webSocketServer.clients.forEach((webSocket) => {
             if(webSocket != exceptWebSocket) this.sendMsg(webSocket, msgType, msg);
         });
+    }
+
+    // Send a msg to the client except webSocket in his range
+    sendMsgToAllExceptInRange(exceptClient: Client, msgType: MSG_TYPE, msg: string): void{
+        for (let index = 0; index < this.clientList.length; index++) {
+            const client = this.clientList[index];
+            if(
+                client !== exceptClient && 
+                client.position.x < exceptClient.position.x + 15 &&
+                client.position.x > exceptClient.position.x - 15 &&
+                client.position.y < exceptClient.position.y + 15 &&
+                client.position.y > exceptClient.position.y - 15
+            ){
+                this.sendMsg(client.websocket, msgType, msg);
+            }
+            
+        }
     }
 }

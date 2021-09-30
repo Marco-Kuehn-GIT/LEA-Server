@@ -16,10 +16,11 @@ const serverOptions: WebSocket.ServerOptions = {
 
 // Start the WebSocketServer with the serverOptions
 const webSocketServer: WebSocket.Server = new WebSocket.Server(serverOptions);
-const server: Server = new Server(webSocketServer);
-console.log(`Started server at port ${serverOptions.port}...`);
 
 let clientList: Client[] = [];
+const server: Server = new Server(webSocketServer, clientList);
+console.log(`Started server at port ${serverOptions.port}...`);
+
 
 // Set Listener for WebSocketConnections
 webSocketServer.on("connection", (websocket: WebSocket) => {
