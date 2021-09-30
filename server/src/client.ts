@@ -74,7 +74,7 @@ export class Client {
                         server.sendMsgToAll(MSG_TYPE.ADD_RESOURCE, Data.TILE_TYPE.WATER + " " + msgArr[1] + " " + msgArr[2]);
                         Data.changeWorldObject({x: parseInt(msgArr[0]), y: parseInt(msgArr[1])}, Data.TILE_TYPE.WATER);
                     }else if(health >= 0){
-                        server.sendMsgToAll(MSG_TYPE.HIT_RESOURCE, msgArr[1] + " " + msgArr[2] + " " + health);
+                        server.sendMsgToAll(MSG_TYPE.HIT_RESOURCE, msgArr[0] + " " + msgArr[1] + " " + health);
                     }
                     break;
                 case MSG_TYPE.REMOVE_RESOURCE:
