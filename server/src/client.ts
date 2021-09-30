@@ -72,7 +72,7 @@ export class Client {
                     console.log("health " + health);
                     if(health === 0){
                         server.sendMsgToAll(MSG_TYPE.REMOVE_RESOURCE, msgArr[1] + " " + msgArr[2]);
-                        Data.changeWorldObject({x: parseInt(msgArr[0]), y: parseInt(msgArr[1])}, Data.TILE_TYPE.WATER
+                        Data.changeWorldObject({x: parseInt(msgArr[0]), y: parseInt(msgArr[1])}, Data.TILE_TYPE.WATER);
                     }else if(health >= 0){
                         server.sendMsgToAll(MSG_TYPE.HIT_RESOURCE, msgArr[1] + " " + msgArr[2] + " " + health);
                     }
