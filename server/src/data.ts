@@ -99,7 +99,9 @@ export function changeWorldObject(position: Vector2, type:TILE_TYPE){
 
 export function hitWorldObject(position: Vector2): number{
     if(worldData.object[position.x][position.y].type !== TILE_TYPE.WATER){
-        return --worldData.object[position.x][position.y].health;
+        console.log("h: ", worldData.object[position.x][position.y].health);
+        
+        return worldData.object[position.x][position.y].health - 1;
     }
     return -1;
 }
