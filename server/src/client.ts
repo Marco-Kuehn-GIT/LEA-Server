@@ -64,6 +64,19 @@ export class Client {
                         server.sendMsgToAll(MSG_TYPE.ADD_RESOURCE, msgStr);
                     }
                     break;
+                case MSG_TYPE.HIT_RESOURCE:
+                    console.log("HIT_RESOURCE " + msgStr);
+                    
+                    msgArr = msgStr.split(" ");
+                    let health = Data.hitWorldObject({x: parseInt(msgArr[0]), y: parseInt(msgArr[1])});
+                    console.log("health " + health);
+                    if(health === 0){
+                        server.sendMsgToAll(MSG_TYPE.REMOVE_RESOURCE, msgArr[1] + " " + msgArr[2]);
+                        Data.changeWorldObject({x: parseInt(msgArr[0]), y: parseInt(msgArr[1])}, Data.TILE_TYPE.WATER
+                    }else if(health >= 0){
+                        server.sendMsgToAll(MSG_TYPE.HIT_RESOURCE, msgArr[1] + " " + msgArr[2] + " " + health);
+                    }
+                    break;
                 case MSG_TYPE.REMOVE_RESOURCE:
                     msgArr = msgStr.split(" ");
                     if(Data.changeWorldObject({x: parseInt(msgArr[0]), y: parseInt(msgArr[1])}, Data.TILE_TYPE.WATER)){

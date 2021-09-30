@@ -97,6 +97,13 @@ export function changeWorldObject(position: Vector2, type:TILE_TYPE){
     }
 }
 
+export function hitWorldObject(position: Vector2): number{
+    if(worldData.object[position.x][position.y].type !== TILE_TYPE.WATER){
+        return --worldData.object[position.x][position.y].health;
+    }
+    return -1;
+}
+
 export function saveWorldData(){
     fs.writeFileSync(config.worldDirectory + "/world.json", JSON.stringify(worldData));
 }
