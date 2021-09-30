@@ -172,7 +172,7 @@ getButton.addEventListener('click', (e)=>{
         const tableDatas = row.querySelectorAll('td');
         let tmp = [];
         for (const data of tableDatas) {
-            tmp.push({type: data.tileData, helath: 4});
+            tmp.push({type: data.tileData, health: 4});
         }
         file.object.push(tmp);
     }

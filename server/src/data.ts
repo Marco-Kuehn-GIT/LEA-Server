@@ -100,8 +100,13 @@ export function changeWorldObject(position: Vector2, type:TILE_TYPE){
 export function hitWorldObject(position: Vector2): number{
     if(worldData.object[position.x][position.y].type !== TILE_TYPE.WATER){
         console.log("h: ", worldData.object[position.x][position.y].health);
+        worldData.object[position.x][position.y].health -= 1;
+
+        if(worldData.object[position.x][position.y].health <= 0){
+            worldData.object[position.x][position.y].type = TILE_TYPE.WATER;
+        }
         
-        return worldData.object[position.x][position.y].health - 1;
+        return worldData.object[position.x][position.y].health;
     }
     return -1;
 }
