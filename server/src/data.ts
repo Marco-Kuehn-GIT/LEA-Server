@@ -10,7 +10,14 @@ export enum TILE_TYPE{
     WATER,
     GRASS,
     STONE,
-    TREE
+    TREE,
+    CHEST,
+    BUSH,
+    CRYSTAL,
+    FIRE,
+    VASE,
+    WOOD_BLOCK,
+    TRASH
 }
 
 export interface ResourceObj{
@@ -89,8 +96,13 @@ export function changeWorldGround(position: Vector2, type:TILE_TYPE){
 }
 
 export function changeWorldObject(position: Vector2, type:TILE_TYPE){
-    if(type === TILE_TYPE.WATER || worldData.object[position.x][position.y].type === TILE_TYPE.WATER){
+    if(type === TILE_TYPE.WATER){
         worldData.object[position.x][position.y].type = type;
+        worldData.object[position.x][position.y].health = 4;
+        return true;
+    }else if(worldData.object[position.x][position.y].type === TILE_TYPE.WATER){
+        worldData.object[position.x][position.y].type = type;
+        worldData.object[position.x][position.y].health = 4;
         return true;
     }else{
         return false;
