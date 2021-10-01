@@ -44,6 +44,7 @@ export class Client {
                 MSG_TYPE.DESPAWN,
                 this.id
             );
+            Data.saveWorldData();
         });
 
         websocket.on("error", (err: Error) => {
