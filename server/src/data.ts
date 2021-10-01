@@ -96,6 +96,10 @@ export function changeWorldGround(position: Vector2, type:TILE_TYPE){
 }
 
 export function changeWorldObject(position: Vector2, type:TILE_TYPE){
+    if(position.x < 0 || position.y < 0 || position.x >= worldData.size.x || position.y >= worldData.size.y){
+        return false;
+    }
+
     if(type === TILE_TYPE.WATER){
         worldData.object[position.x][position.y].type = type;
         worldData.object[position.x][position.y].health = 4;
@@ -110,6 +114,10 @@ export function changeWorldObject(position: Vector2, type:TILE_TYPE){
 }
 
 export function hitWorldObject(position: Vector2): number{
+    if(position.x < 0 || position.y < 0 || position.x >= worldData.size.x || position.y >= worldData.size.y){
+        return -1;
+    }
+
     if(worldData.object[position.x][position.y].type !== TILE_TYPE.WATER){
         console.log("h: ", worldData.object[position.x][position.y].health);
         worldData.object[position.x][position.y].health -= 1;
