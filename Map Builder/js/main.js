@@ -46,6 +46,8 @@ function changeTileData (tileType, tableData){
     }
 }
 
+
+
 for (let j = 0; j < mapSize; j++) {
     const tableRow = document.createElement("tr");
     tableRow.draggable = false;
@@ -88,7 +90,6 @@ for (let j = 0; j < mapSize; j++) {
     fields.push(fieldRow);
 }
 
-
 for (let i = 0; i < mapSize; i++) {
     const tableRow = document.createElement("tr");
     tableRow.draggable = false;
@@ -113,6 +114,10 @@ for (let i = 0; i < mapSize; i++) {
                 else if (tileType.value === "3"){
                     tableData.tileData = 3;
                     div.style.backgroundColor = "brown";
+                }
+                else if (tileType.value === "24"){
+                    tableData.tileData = 24;
+                    div.style.backgroundColor = "red";
                 }
             }
         })
@@ -212,6 +217,9 @@ giveButton.addEventListener('click' , (e)=>{
             }
             else if(tile.tileData === 3){
                 div.style.backgroundColor = "brown";
+            }
+            else if(tile.tileData === 24){
+                div.style.backgroundColor = "red";
             }
         }
     }
