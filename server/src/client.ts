@@ -105,6 +105,10 @@ export class Client {
                     );
                     break;
                 case MSG_TYPE.AUTH:{
+                    msgArr = msgStr.split(" ");
+
+                    this.name = msgArr[0];
+
                     server.sendMsg(
                         this.websocket,
                         MSG_TYPE.INIT,
