@@ -16,8 +16,21 @@ export enum TILE_TYPE{
     CRYSTAL,
     FIRE,
     VASE,
+    WOOD_Wall,
     WOOD_BLOCK,
-    TRASH
+    WATER_L,
+    WATER_R,
+    WATER_T,
+    WATER_B,
+    WATER_TL,
+    WATER_TR,
+    WATER_BL,
+    WATER_BR,
+    WATER_C_TL,
+    WATER_C_TR,
+    WATER_C_BL,
+    WATER_C_BR,
+    SAND
 }
 
 export interface ResourceObj{
@@ -97,6 +110,10 @@ export function changeWorldGround(position: Vector2, type:TILE_TYPE){
 
 export function changeWorldObject(position: Vector2, type:TILE_TYPE){
     if(position.x < 0 || position.y < 0 || position.x >= worldData.size.x || position.y >= worldData.size.y){
+        return false;
+    }
+
+    if(worldData.ground[position.x][position.y] === TILE_TYPE.WATER){
         return false;
     }
 
