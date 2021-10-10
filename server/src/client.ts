@@ -61,7 +61,7 @@ export class Client {
                     console.log("ADD",msgStr);
                     
                     msgArr = msgStr.split(" ");
-                    if(Data.changeWorldObject({x: parseInt(msgArr[1]), y: parseInt(msgArr[2])}, parseInt(msgArr[0]))){
+                    if(Data.changeWorldObject({x: parseInt(msgArr[1]), y: parseInt(msgArr[2])}, parseInt(msgArr[0]), parseInt(msgArr[3]))){
                         server.sendMsgToAll(MSG_TYPE.ADD_RESOURCE, msgStr);
                     }
                     break;

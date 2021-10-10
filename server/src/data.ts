@@ -82,18 +82,19 @@ export function loadWorldData() {
 export function getWorldDataAsMsg(){
     //worldData
     let msgStr: string = worldData.size.x + " " + worldData.size.y + " ";
+    let objectMsgString: string = "";
 
-    for (const row of worldData.ground) {
-        for (const tileType of row) {
-            msgStr += String.fromCharCode(tileType);
+    for (let x = 0; x < worldData.size.x; x++) {
+        for (let y = 0; y < worldData.size.y; y++) {
+            msgStr += String.fromCharCode(worldData.ground[x][y]);
+
+            objectMsgString += String.fromCharCode(x);
+            objectMsgString += String.fromCharCode(y);
+            objectMsgString += String.fromCharCode(worldData.object[x][y].type);
+            objectMsgString += String.fromCharCode(worldData.object[x][y].health);
         }
     }
-    for (const row of worldData.object) {
-        for (const tileType of row) {
-            msgStr += String.fromCharCode(tileType.type);
-        }
-    }
-    return msgStr;
+    return msgStr + objectMsgString;
 }
 
 export function getWorldGround(position: Vector2){
@@ -108,7 +109,7 @@ export function changeWorldGround(position: Vector2, type:TILE_TYPE){
     worldData.ground[position.x][position.y] = type;
 }
 
-export function changeWorldObject(position: Vector2, type:TILE_TYPE){
+export function changeWorldObject(position: Vector2, type:TILE_TYPE, newHealth: number = 4){
     if(position.x < 0 || position.y < 0 || position.x >= worldData.size.x || position.y >= worldData.size.y){
         return false;
     }
@@ -119,11 +120,11 @@ export function changeWorldObject(position: Vector2, type:TILE_TYPE){
 
     if(type === TILE_TYPE.WATER){
         worldData.object[position.x][position.y].type = type;
-        worldData.object[position.x][position.y].health = 4;
+        worldData.object[position.x][position.y].health = newHealth;
         return true;
     }else if(worldData.object[position.x][position.y].type === TILE_TYPE.WATER){
         worldData.object[position.x][position.y].type = type;
-        worldData.object[position.x][position.y].health = 4;
+        worldData.object[position.x][position.y].health = newHealth;
         return true;
     }else{
         return false;
